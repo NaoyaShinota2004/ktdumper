@@ -25,6 +25,7 @@ from dump.pipl.pipl_onenand_fast_v2 import PiplOnenandFast_v2
 from dump.pipl.pipl_emmc_dumper import PiplEmmcDumper
 from dump.pipl.pipl_emmc_fuse import PiplEmmcFuse
 from dump.pipl.pipl_exploit_nor_probe import PiplExploitNorProbe
+from dump.pipl.pipl_probe_onenand import PiplProbeOnenand
 
 from dump.sh.sh_exploit import ShExploit
 from dump.fujitsu.fujitsu_java_dumper import FujitsuJavaDumper
@@ -70,7 +71,7 @@ DEVICES = [
 
     # DOCOMO
 
-    Device("n2051", 0x0a3c, 0x00, {
+    Device("n2051", 0x0a3c, 0x000d, {
         "probe_nor": NecNorProbe(base=0x0),
         "dump_nor": NecMemoryDumper(base=0x0, size=MB(32)),
         "nand_id": NecNandId(),
@@ -578,7 +579,14 @@ DEVICES = [
     Device("p-01c", 0x04da, 0x216b, {
         "dump_nand": PiplOnenandDumper(),
         "onenand_id": PiplOnenandId(),
+        "probe_onenand": PiplProbeOnenand(sweep_start=0x0),
     }, exploit_flavor="C2", payload_base=0x83800000, onenand_addr=0x0C000000),
+
+    Device("p-02c", 0x04da, 0x216b, {
+        "dump_nand": PiplOnenandFast_v2(),
+        "onenand_id": PiplOnenandId(),
+    }, exploit_flavor="C2", payload_base=0x83800000, usb_receive=0x80024768, usb_send=0x80024554,
+       onenand_addr=0x0C000000),
 
     Device("p-06c", 0x04da, 0x216b, {
         "dump_rom": PiplExploitMemoryDumper(base=0x0, size=0x8000),
@@ -874,6 +882,12 @@ DEVICES = [
         "onenand_id": ShSrecExploitOnenandId_v2(),
         "dump_nand": ShSrecExploitOnenandFast_v2(),
     }, payload_base=0xE55B0000, fatal_err=0x60c04848, usb_interrupt=0x60C02000, usb_getch=0x60c03f14, usb_send=0x60c04118, usb_send_commit=0x60c03a94,
+       onenand_addr=0x30000000),
+
+    Device("f-06b", 0x04c5, 0x11d5, {
+        "onenand_id": ShSrecExploitOnenandId_v2(),
+        "dump_nand": ShSrecExploitOnenandFast_v2(),
+    }, payload_base=0xE55B0000, fatal_err=0x60c04590, usb_interrupt=0x60C02000, usb_getch=0x60c03cb8, usb_send=0x60c03e90, usb_send_commit=0x60c0388c,
        onenand_addr=0x30000000),
 
     Device("f-01c", 0x04c5, 0x11e8, {
