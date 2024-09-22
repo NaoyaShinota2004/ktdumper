@@ -412,6 +412,13 @@ DEVICES = [
         "dump_nand": NecOnenandDumper(),
     }, payload_base=0x80000000, onenand_addr=0x10000000, quirks=SLOW_READ),
 
+    Device("p703iu", 0x0a3c, 0x000d, {
+        "probe_nor": NecNorProbe(base=0x08000000),
+        "dump_nor": NecMemoryDumper(base=0x08000000, size=MB(64)),
+        "onenand_id": NecOnenandId(),
+        "dump_nand": NecOnenandDumper(),
+    }, payload_base=0x80000000, onenand_addr=0x10000000, quirks=SLOW_READ),
+
     Device("p903i", 0x0a3c, 0x000d, {
         "dump_nor": NecMemoryDumper(base=0x0, size=MB(128)),
         "dump_nand": NecOnenandDumper(),
@@ -478,6 +485,22 @@ DEVICES = [
        payload_base=0x80005000, usb_receive=0x00012470, usb_send=0x00012310,
        onenand_addr=0x10000000),
 
+    Device("p706iu", 0x04da, 0x216b, {
+        "dump_nor": PiplExploitMemoryDumper(base=0x0, size=MB(128)),
+        "probe_nor": PiplExploitNorProbe(base=0x0),
+        "onenand_id": PiplOnenandId(),
+        "dump_nand": PiplOnenandFast_v2(),
+    }, exploit_flavor="A2", payload_base=0x80005000, usb_receive=0x00012678, usb_send=0x00012518,
+       onenand_addr=0x0C000000),
+
+    Device("p706ie", 0x04da, 0x216b, {
+        "dump_nor": PiplExploitMemoryDumper(base=0x0, size=MB(128)),
+        "probe_nor": PiplExploitNorProbe(base=0x0),
+        "onenand_id": PiplOnenandId(),
+        "dump_nand": PiplOnenandFast_v2(),
+    }, exploit_flavor="A2", payload_base=0x80005000, usb_receive=0x00012678, usb_send=0x00012518,
+       onenand_addr=0x0C000000),
+
     Device("p906i", 0x0a3c, 0x000d, {
         "onenand_id": NecOnenandId_v2(),
         "probe_nor": NecNorProbe(base=0x0),
@@ -518,6 +541,15 @@ DEVICES = [
         "onenand_id": PiplOnenandId(),
         "dump_nand": PiplOnenandDumper(),
     }, exploit_flavor="A", payload_base=0x8009c000, onenand_addr=0x0C000000),
+
+    Device("p-06a", 0x04da, 0x216b, {
+        "probe_nor": PiplExploitNorProbe(base=0x0),
+        "dump_nor": PiplExploitMemoryDumper(base=0x0, size=MB(128)),
+        "onenand_id": PiplOnenandId(),
+        "probe_nand": PiplProbeOnenand(sweep_start=0x0),
+        "dump_nand": PiplOnenandFast_v2(),
+    }, exploit_flavor="A2", payload_base=0x80005000, usb_receive=0x00012678, usb_send=0x00012518,
+       onenand_addr=0x0C000000),
 
     Device("p-08a", 0x04da, 0x216b, {
         "dump_nor": PiplExploitMemoryDumper(base=0x0, size=MB(128)),
@@ -562,6 +594,12 @@ DEVICES = [
         "dump_nand_a": PiplOnenandDumper(onenand_addr=0x0C000000),
         "dump_nand_b": PiplOnenandDumper(onenand_addr=0x18000000),
     }, exploit_flavor="B", payload_base=0x83800000),
+
+    Device("p-05b", 0x04da, 0x216b, {
+        "dump_nand": PiplOnenandDumper(),
+        "onenand_id": PiplOnenandId(),
+        "probe_onenand": PiplProbeOnenand(sweep_start=0x0),
+    }, exploit_flavor="B", payload_base=0x83800000, onenand_addr=0x0C000000),
 
     Device("p-06b", 0x04da, 0x216b, {
         "dump_nand_a": PiplOnenandDumper(onenand_addr=0x0C000000),
