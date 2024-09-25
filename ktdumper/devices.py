@@ -16,6 +16,7 @@ from dump.nec.nec_onenand_fast_v2 import NecOnenandFast_v2
 from dump.nec.nec_mlc_check import NecMlcCheck
 from dump.nec.nec_nor_probe import NecNorProbe
 from dump.nec.nec_nand_dumper_lp_v2 import NecNandDumperLp_v2
+from dump.nec.nec_probe_onenand import NecProbeOnenand
 
 from dump.pipl.pipl_exploit_memory_dumper import PiplExploitMemoryDumper
 from dump.pipl.pipl_onenand_dumper import PiplOnenandDumper
@@ -213,6 +214,14 @@ DEVICES = [
        usb_command=0x33ee5198, usb_data=0x33ef51e2, usb_datasz=0x33ef51dc, usb_respfunc=0x50a8,
        quirks=SLOW_READ),
 
+    Device("n-05a", 0x0409, 0x0278, {
+        "dump_nor": NecMemoryDumper_v2(base=0x0, size=MB(128)),
+        "probe_nor": NecNorProbe(base=0x0),
+        "onenand_id": NecOnenandId(),
+        "dump_nand": NecOnenandFast_v2(),
+    }, payload_base=0x30000000, usb_receive=0x00004e0c, usb_send=0x00005764, quirks=SLOW_READ,
+       onenand_addr=0x10000000),
+
     Device("n-06a", 0x0409, 0x0274, {
         "dump_nor": NecMemoryDumperPayload(base=0x0, size=MB(128)),
         "dump_nand": NecNandDumperLp(size=MB(512)),
@@ -254,6 +263,13 @@ DEVICES = [
         "mlc_check": NecMlcCheck(),
     }, secret="72c31bffccb50b4ef733cee76e91ccfc79615a6b",
        payload_base=0x80000000, usb_receive=0x80264704, usb_send=0x80263f6c,
+       onenand_addr=0x08000000),
+
+    Device("n-05b", 0x0409, 0x029c, {
+        "onenand_id": NecOnenandId_v2(),
+        "dump_nand": NecOnenandFast_v2(),
+    }, secret="72c31bffccb50b4ef733cee76e91ccfc79615a6b",
+       payload_base=0x80000000, usb_receive=0x802646e0, usb_send=0x80263f48,
        onenand_addr=0x08000000),
 
     Device("n-06b", 0x0409, 0x02c0, {
@@ -411,6 +427,12 @@ DEVICES = [
         "dump_nor": NecMemoryDumper(base=0x08000000, size=MB(64)),
         "dump_nand": NecOnenandDumper(),
     }, payload_base=0x80000000, onenand_addr=0x10000000, quirks=SLOW_READ),
+
+    Device("p703i", 0x0a3c, 0x000d, {
+        "dump_nor": NecMemoryDumper(base=0x0, size=MB(96)),
+        "onenand_id": NecOnenandId(),
+        "dump_nand": NecOnenandDumper(),
+    }, payload_base=0x90000000, onenand_addr=0x08000000),
 
     Device("p703iu", 0x0a3c, 0x000d, {
         "probe_nor": NecNorProbe(base=0x08000000),
