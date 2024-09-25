@@ -710,6 +710,12 @@ DEVICES = [
         "dump_nand_b": PiplOnenandDumper(onenand_addr=0x18000000),
     }, exploit_flavor="B", payload_base=0x83800000),
 
+    Device("941p", 0x04da, 0x216b, {
+        "dump_rom": PiplExploitMemoryDumper(base=0x0, size=0x8000),
+        "dump_nand_a": PiplOnenandDumper(onenand_addr=0x0C000000),
+        "dump_nand_b": PiplOnenandDumper(onenand_addr=0x18000000),
+    }, exploit_flavor="B", payload_base=0x83800000),
+
     Device("942p", 0x04da, 0x216b, {
         "dump_rom": PiplExploitMemoryDumper(base=0x0, size=0x8000),
         "dump_nand_a": PiplOnenandDumper(onenand_addr=0x0C000000),
